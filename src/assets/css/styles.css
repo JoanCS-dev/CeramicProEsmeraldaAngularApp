@@ -18116,10 +18116,10 @@ body {
     transition: margin 0.15s ease-in-out;
   }
   .sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(-15rem);
+    transform: translateX(-15.5rem);
   }
   .sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-left: -15rem;
+    margin-left: -15.5rem;
   }
   .sidenav-toggled #layoutSidenav #layoutSidenav_content:before {
     display: none;
@@ -18207,10 +18207,10 @@ body {
     transition: margin 0.15s ease-in-out;
   }
   .layout-rtl.sidenav-toggled #layoutSidenav #layoutSidenav_nav {
-    transform: translateX(15rem);
+    transform: translateX(15.5rem);
   }
   .layout-rtl.sidenav-toggled #layoutSidenav #layoutSidenav_content {
-    margin-right: -15rem;
+    margin-right: -15.5rem;
   }
 }
 

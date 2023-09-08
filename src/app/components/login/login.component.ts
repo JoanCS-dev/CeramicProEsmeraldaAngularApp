@@ -12,12 +12,25 @@ export class LoginComponent {
   ) {
   }
 
+  get EmailIsValid() {
+    return this.login.get('email')?.invalid && this.login.get('email')?.touched;
+  }
+
+  get PasswordIsValid(){
+    return this.login.get('password')?.invalid && this.login.get('password')?.touched;
+  }
+
   login = this.fb.group({
     email: ['', [Validators.required, Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.minLength(5)]]
   })
 
   evtLogin() {
+    if(this.login.invalid){
+      return Object.values(this.login.controls).forEach(control => {
+        control.markAllAsTouched();
+      });
+    }
     console.log(JSON.stringify(this.login.value));
   }
 

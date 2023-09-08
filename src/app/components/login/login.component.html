@@ -1,3 +1,12 @@
+<swal
+  *ngIf="mdlShow"
+  title="{{mdlTitle}}"
+  text="{{mdlMessage}}"
+  icon="error"
+  [swalFireOnInit]="true"
+  (didClose)="mdlShow = false">
+</swal>
+
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
@@ -16,15 +25,15 @@
                                 <form [formGroup]="login" (ngSubmit)="evtLogin()">
                                   
                                     <div class="mb-3">
-                                        <label class="text-gray-600 small" for="emailExample">Correo Electrónico</label>
-                                        <input class="form-control form-control-solid" type="text" placeholder="Escribe aquí" formControlName="email"
+                                        <label class="text-gray-600 small">Correo Electrónico</label>
+                                        <input class="form-control form-control-solid" type="text" placeholder="Escribe aquí" formControlName="acUser"
                                         [class.is-invalid]="EmailIsValid"/>
                                         <small *ngIf="EmailIsValid" class="text-danger">Por favor escribe un correo valido</small>
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label class="text-gray-600 small" for="passwordExample">Contraseña</label>
-                                        <input class="form-control form-control-solid" type="password" placeholder="Escribe aquí" formControlName="password"
+                                        <label class="text-gray-600 small">Contraseña</label>
+                                        <input class="form-control form-control-solid" type="password" placeholder="Escribe aquí" formControlName="acPassword"
                                         [class.is-invalid]="PasswordIsValid"/>
                                         <small *ngIf="PasswordIsValid" class="text-danger">Este campo requiere 5 caracteres como minimo</small>
                                     </div>

@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { MainComponent } from './components/home/main/main.component';
 import { UserAdmonComponent } from './components/home/user-admon/user-admon.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ReactiveFormsModule } from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SweetAlert2Module
   ],
   providers: [],
   bootstrap: [AppComponent]

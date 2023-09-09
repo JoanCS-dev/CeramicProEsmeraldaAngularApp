@@ -10,6 +10,7 @@ import { MainComponent } from './components/home/main/main.component';
 import { UserAdmonComponent } from './components/home/user-admon/user-admon.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { DataTablesModule } from "angular-datatables";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
     AppRoutingModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,40 @@
-<p>user-admon works!</p>
+<swal
+  *ngIf="mdlShowProgress"
+  html="{{mdlHtmlProgress}}"
+  title="Procesando Información"
+  [showConfirmButton]="false"
+  [allowEnterKey]="false"
+  [allowEnterKey]="false"
+  [allowOutsideClick]="false"
+  [swalFireOnInit]="true"
+  (didClose)="mdlShowProgress = false">
+</swal>
+<div class="card">
+  <div class="card-header">
+    Lista de usuarios
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th>Nombre completo</th>
+            <th>Correo electrónico</th>
+            <th>Número de teléfono</th>
+            <th>Estatus</th>
+            <th>Aciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of lst_usuarios">
+            <td>{{ item.peopleVM.peFirstName }} {{ item.peopleVM.peLastName }}</td>
+            <td>{{ item.acEmailAddress }}</td>
+            <td>{{ item.acPhoneNumber }}</td>
+            <td>Estatus</td>
+            <td>Aciones</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

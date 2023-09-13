@@ -4,12 +4,16 @@ import { Subject } from 'rxjs';
 import { AccountService } from 'src/app/services/account.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Constants } from 'src/app/tools/Constants';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-user-admon',
   templateUrl: './user-admon.component.html'
 })
 export class UserAdmonComponent implements OnInit {
+
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: any = DataTableDirective;
   
   mdlErrorShow = false;
   mdlErrorMessage = ""
@@ -55,29 +59,18 @@ export class UserAdmonComponent implements OnInit {
   }
 
   form_add = this.fb.group({
-    accountID: [0],
+    accountID: [0, { nonNullable: true }],
     acUser: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     acPassword: ['', [Validators.required, Validators.minLength(8)]],
     acPasswordV: ['', [Validators.required, Validators.minLength(8)]],
-    acEmailAddress: [''],
     acPhoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-    acStatus: [''],
-    acRDate: [''],
     token: [''],
-    peopleID: [0],
-    profileID: [-1],
+    peopleID: [0, { nonNullable: true }],
+    profileID: [-1, { nonNullable: true }],
     peopleVM: this.fb.group({
-      peopleID: [0],
+      peopleID: [0, { nonNullable: true }],
       peFirstName: ['', [Validators.required, Validators.minLength(3)]],
-      peLastName: ['', [Validators.required, Validators.minLength(3)]],
-      peDateOfBirth: [''],
-      peStatus: ['Active'],
-      peRDate: [''],
-      peStreet: [''],
-      peOutsideCode: [''],
-      peInsideCode: [''],
-      peCP: [''],
-      settlementID: [0, {nonNullable: true}]
+      peLastName: ['', [Validators.required, Validators.minLength(3)]]
     })
   })
 
@@ -98,22 +91,53 @@ export class UserAdmonComponent implements OnInit {
     this.Perfiles();
   }
 
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
   SaveAs() {
-    console.log(this.form_add.value);
+    
     if(this.form_add.invalid){
       return Object.values(this.form_add.controls).forEach(control => {
         control.markAllAsTouched();
       });
     }
 
+    this.mdlProgressShow = true;
+
+    this.accountServ.Add(this.form_add.value).subscribe({
+      next: (response) => {
+        if(response.ok){
+          this.mdlProgressShow = false;
+          this.mdlSuccessShow = true;
+          this.mdlSuccessMessage = response.message;
+          this.ResetFormAdd();
+        }else {
+          this.ShowError(response.message);
+        }
+      },
+      error: (error) => {
+        this.ShowError(error.message);
+      }
+    });
+
   }
 
   ResetFormAdd() {
     this.form_add.reset();
-    this.form_add.get("profileID")?.setValue(-1);
+  }
+
+  reload(){
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.load();
+    });
   }
 
   load() {
+    this.lst_usuarios = [];
 
     this.accountServ.List().subscribe({
       next: (response) => {
@@ -124,9 +148,7 @@ export class UserAdmonComponent implements OnInit {
         }
       },
       error: (error) => {
-        this.mdlProgressShow = false;
-        this.mdlErrorShow = true;
-        this.mdlErrorMessage = error.message;
+        this.ShowError(error.message);
       }
     });
 
@@ -141,11 +163,16 @@ export class UserAdmonComponent implements OnInit {
         }
       },
       error: (error) => {
-        this.mdlErrorShow = true;
-        this.mdlErrorMessage = error.message;
+        this.ShowError(error.message);
       }
     });
 
+  }
+
+  private ShowError(error: any){
+    this.mdlProgressShow = false;
+    this.mdlErrorShow = true;
+    this.mdlErrorMessage = error;
   }
 
 }

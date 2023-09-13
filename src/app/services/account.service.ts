@@ -27,7 +27,7 @@ export class AccountService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem("strToken")
     });
-    return this.http.post<IResponseG>(`${this.url}WebAccount/Lst`, data, { headers: reqHeader });
+    return this.http.post<IResponseG>(`${this.url}WebAccount/Add`, data, { headers: reqHeader });
   }
 
 }

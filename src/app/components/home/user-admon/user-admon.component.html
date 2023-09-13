@@ -88,43 +88,45 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="form_add" (ngSubmit)="SaveAs()">
-          <div class="form-group">
-            <small>Nombres</small>
-            <input type="text" class="form-control form-control-sm" formControlName="peFirstName" placeholder="Escribe aquí" [class.is-invalid]="PeFirstName">
-            <small class="text-danger" *ngIf="PeFirstName">Este campo requiere 3 caracteres como mínimo</small>
+          <div formGroupName="peopleVM">
+            <div class="form-group">
+              <small>Nombres</small>
+              <input type="text" class="form-control form-control-sm" formControlName="peFirstName" placeholder="Escribe aquí" [class.is-invalid]="PeFirstName">
+              <small class="text-danger text-small" *ngIf="PeFirstName">Este campo requiere 3 caracteres como mínimo</small>
+            </div>
+            <div class="form-group mt-1">
+              <small>Apellidos</small>
+              <input type="text" class="form-control form-control-sm" formControlName="peLastName"  placeholder="Escribe aquí" [class.is-invalid]="PeLastName">
+              <small class="text-danger text-small" *ngIf="PeLastName">Este campo requiere 3 caracteres como mínimo</small>
+            </div>
           </div>
-          <div class="form-group mt-2">
-            <small>Apellidos</small>
-            <input type="text" class="form-control form-control-sm" formControlName="peLastName"  placeholder="Escribe aquí" [class.is-invalid]="PeLastName">
-            <small class="text-danger" *ngIf="PeLastName">Este campo requiere 3 caracteres como mínimo</small>
-          </div>
-          <div class="form-group mt-2">
+          <div class="form-group mt-1">
             <small>Teléfono</small>
             <input type="number" class="form-control form-control-sm" formControlName="acPhoneNumber"  placeholder="Escribe aquí" [class.is-invalid]="AcPhoneNumber">
-            <small class="text-danger" *ngIf="AcPhoneNumber">Este campo requiere 10 caracteres como mínimo y máximo</small>
+            <small class="text-danger text-small" *ngIf="AcPhoneNumber">Este campo requiere 10 caracteres como mínimo y máximo</small>
           </div>
-          <div class="form-group mt-2">
+          <div class="form-group mt-1">
             <small>Corre electrónico</small>
             <input type="email" class="form-control form-control-sm" formControlName="acUser"  placeholder="Escribe aquí" [class.is-invalid]="AcUser">
-            <small class="text-danger" *ngIf="AcUser">Por favor escribe un correo valido</small>
+            <small class="text-danger text-small" *ngIf="AcUser">Por favor escribe un correo valido</small>
           </div>
-          <div class="form-group mt-2">
+          <div class="form-group mt-1">
             <small>Contraseña</small>
             <input type="password" class="form-control form-control-sm" formControlName="acPassword"  placeholder="Escribe aquí" [class.is-invalid]="AcPassword">
-            <small class="text-danger" *ngIf="AcPassword">Este campo requiere 8 caracteres como mínimo</small>
+            <small class="text-danger text-small" *ngIf="AcPassword">Este campo requiere 8 caracteres como mínimo</small>
           </div>
-          <div class="form-group mt-2">
+          <div class="form-group mt-1">
             <small>Verifica tu contraseña</small>
             <input type="password" class="form-control form-control-sm" formControlName="acPasswordV"  placeholder="Escribe aquí" [class.is-invalid]="AcPasswordV">
-            <small class="text-danger" *ngIf="AcPasswordV">Las contraseñas no coinciden</small>
+            <small class="text-danger text-small" *ngIf="AcPasswordV">Las contraseñas no coinciden</small>
           </div>
-          <div class="form-group mt-2">
+          <div class="form-group mt-1">
             <small>Perfil</small>
             <select class="form-control form-control-sm" formControlName="profileID" [class.is-invalid]="ProfileID">
               <option value="-1">Seleccione</option>
               <option *ngFor="let item of lst_perfiles" [value]="item.id">{{ item.text }}</option>
             </select>
-            <small class="text-danger" *ngIf="ProfileID">Por favor selecciona el perfil</small>
+            <small class="text-danger text-small" *ngIf="ProfileID">Por favor selecciona el perfil</small>
           </div>
         </form>
       </div>

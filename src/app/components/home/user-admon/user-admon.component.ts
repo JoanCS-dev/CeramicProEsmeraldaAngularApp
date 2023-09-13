@@ -20,7 +20,6 @@ export class UserAdmonComponent implements OnInit {
   mdlProgressShow = false;
   mdlProgressHtml = `<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><small>Por favor espera un momento, este proceso puede tardar</small>`;
   
-  
   lst_usuarios: any;
   lst_perfiles: any
   dtOptions: DataTables.Settings = { };
@@ -56,13 +55,30 @@ export class UserAdmonComponent implements OnInit {
   }
 
   form_add = this.fb.group({
-    peFirstName: ['', [Validators.required, Validators.minLength(3)]],
-    peLastName: ['', [Validators.required, Validators.minLength(3)]],
+    accountID: [0],
     acUser: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     acPassword: ['', [Validators.required, Validators.minLength(8)]],
     acPasswordV: ['', [Validators.required, Validators.minLength(8)]],
+    acEmailAddress: [''],
     acPhoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-    profileID: [-1]
+    acStatus: [''],
+    acRDate: [''],
+    token: [''],
+    peopleID: [0],
+    profileID: [-1],
+    peopleVM: this.fb.group({
+      peopleID: [0],
+      peFirstName: ['', [Validators.required, Validators.minLength(3)]],
+      peLastName: ['', [Validators.required, Validators.minLength(3)]],
+      peDateOfBirth: [''],
+      peStatus: ['Active'],
+      peRDate: [''],
+      peStreet: [''],
+      peOutsideCode: [''],
+      peInsideCode: [''],
+      peCP: [''],
+      settlementID: [0, {nonNullable: true}]
+    })
   })
 
   constructor(
@@ -83,11 +99,13 @@ export class UserAdmonComponent implements OnInit {
   }
 
   SaveAs() {
+    console.log(this.form_add.value);
     if(this.form_add.invalid){
       return Object.values(this.form_add.controls).forEach(control => {
         control.markAllAsTouched();
       });
     }
+
   }
 
   ResetFormAdd() {

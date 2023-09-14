@@ -41,7 +41,7 @@
   *ngIf="mdlDeleteShow"
   icon="question"
   title="¿Estas seguro?"
-  text="Es estatus cambiara a eliminado"
+  text="El estatus cambiara a eliminado"
   confirmButtonText="Confirmar"
   cancelButtonText="Cancelar"
   [showConfirmButton]="true"
@@ -58,7 +58,7 @@
   *ngIf="mdlDeactivateShow"
   icon="question"
   title="¿Estas seguro?"
-  text="Es estatus cambiara a desactivado"
+  text="El estatus cambiara a desactivado"
   confirmButtonText="Confirmar"
   cancelButtonText="Cancelar"
   [showConfirmButton]="true"
@@ -84,7 +84,7 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-sm table-hover table-striped">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered table-sm table-hover ">
         <thead>
           <tr>
             <th>Nombre completo</th>
@@ -95,7 +95,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of lst_usuarios">
+          <tr *ngFor="let item of lst_usuarios" class="text-center">
             <td>{{ item.peopleVM.peFirstName }} {{ item.peopleVM.peLastName }}</td>
             <td>{{ item.acEmailAddress }}</td>
             <td>{{ item.acPhoneNumber }}</td>
@@ -111,10 +111,6 @@
               &nbsp;
               <button (click)="ShowModalDeactivate({item})" style="background: transparent; border: 0; padding: 0; margin: 0;">
                 <i class="fa-regular fa-square-minus text-warning"></i>
-              </button>
-              &nbsp;
-              <button style="background: transparent; border: 0; padding: 0; margin: 0;">
-                <i class="fa-solid fa-eye text-primary"></i>
               </button>
               
             </td>

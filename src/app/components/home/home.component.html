@@ -43,18 +43,28 @@
 
                     <div class="sidenav-menu-heading">Inicio</div>
                     <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
-                        data-bs-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                        data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
                         <div class="nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
                         Usuarios
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseDashboards" data-bs-parent="#accordionSidenav">
+                    <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" [routerLink]="['/home/users']" routerLinkActive="activate">Usuarios</a>
+                            <a class="nav-link" [routerLink]="['/home/users']" routerLinkActive="activate">Administración</a>
                         </nav>
                     </div>
                     
-                    
+                    <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
+                        data-bs-target="#collapseQuotes" aria-expanded="false" aria-controls="collapseQuotes">
+                        <div class="nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        Citas
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseQuotes" data-bs-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" [routerLink]="['/home/quotes']" routerLinkActive="activate">Administración</a>
+                        </nav>
+                    </div>
                     
                 </div>
             </div>

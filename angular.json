@@ -26,7 +26,7 @@
             ],
             "styles": [
               "src/assets/css/styles.css",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.min.css"
+              "src/assets/css/jquery.dataTables.css"
             ],
             "scripts": [
               "src/assets/js/bootstrap.bundle.min.js",
@@ -93,7 +93,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/css/styles.css"
+              "src/assets/css/styles.css",
+              "src/assets/css/jquery.dataTables.css"
             ],
             "scripts": [
               "src/assets/js/bootstrap.bundle.min.js",

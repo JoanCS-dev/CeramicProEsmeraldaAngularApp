@@ -11,6 +11,7 @@ import { UserAdmonComponent } from './components/home/user-admon/user-admon.comp
 import { ReactiveFormsModule } from "@angular/forms";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { DataTablesModule } from "angular-datatables";
+import { QuotesComponent } from './components/home/quotes/quotes.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DataTablesModule } from "angular-datatables";
     HomeComponent,
     PageNotFoundComponent,
     MainComponent,
-    UserAdmonComponent
+    UserAdmonComponent,
+    QuotesComponent
   ],
   imports: [
     BrowserModule,

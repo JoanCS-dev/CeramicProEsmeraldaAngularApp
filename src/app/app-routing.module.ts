@@ -5,11 +5,13 @@ import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { MainComponent } from './components/home/main/main.component';
 import { UserAdmonComponent } from './components/home/user-admon/user-admon.component';
+import { QuotesComponent } from './components/home/quotes/quotes.component';
 
 const routes_home: Routes = [
   { path: "", component: MainComponent },
   { path: "main", component: MainComponent },
   { path: "users", component: UserAdmonComponent },
+  { path: "quotes", component: QuotesComponent },
   { path: "**", component: PageNotFoundComponent }
 ];
 

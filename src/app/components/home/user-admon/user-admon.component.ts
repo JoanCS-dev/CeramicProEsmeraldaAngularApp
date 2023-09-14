@@ -111,9 +111,9 @@ export class UserAdmonComponent implements OnInit {
     this.form_add.patchValue({
       accountID: d.item.accountID,
       acUser: d.item.acUser,
-      acPhoneNumber: d.item.acPhoneNumber,
-      profileID: d.item.profileID,
       peopleID: d.item.peopleID,
+      acPhoneNumber: d.item.acPhoneNumber,
+      profileID: d.item.profileVM.profileID,
       peopleVM: {
         peopleID: d.item.peopleID,
         peFirstName: d.item.peopleVM.peFirstName,

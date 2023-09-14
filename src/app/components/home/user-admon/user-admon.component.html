@@ -37,6 +37,40 @@
   (didClose)="mdlSuccessShow = false">
 </swal>
 
+<swal
+  *ngIf="mdlDeleteShow"
+  icon="question"
+  title="¿Estas seguro?"
+  text="Es estatus cambiara a eliminado"
+  confirmButtonText="Confirmar"
+  cancelButtonText="Cancelar"
+  [showConfirmButton]="true"
+  [showCancelButton]="true"
+  [allowEnterKey]="false"
+  [allowEnterKey]="false"
+  [allowOutsideClick]="false"
+  [swalFireOnInit]="true"
+  (confirm)="Delete()"
+  (didClose)="mdlDeleteShow = false">
+</swal>
+
+<swal
+  *ngIf="mdlDeactivateShow"
+  icon="question"
+  title="¿Estas seguro?"
+  text="Es estatus cambiara a desactivado"
+  confirmButtonText="Confirmar"
+  cancelButtonText="Cancelar"
+  [showConfirmButton]="true"
+  [showCancelButton]="true"
+  [allowEnterKey]="false"
+  [allowEnterKey]="false"
+  [allowOutsideClick]="false"
+  [swalFireOnInit]="true"
+  (confirm)="Deactivate()"
+  (didClose)="mdlDeactivateShow = false">
+</swal>
+
 <div class="card">
   <div class="card-header">
     <div class="row">
@@ -67,10 +101,22 @@
             <td>{{ item.acPhoneNumber }}</td>
             <td>{{ item.acStatus }}</td>
             <td>
-              <i class="fa-solid fa-pencil text-default"></i>&nbsp;&nbsp;
-              <i class="fa-regular fa-trash-can text-danger"></i>&nbsp;&nbsp;
-              <i class="fa-regular fa-square-minus text-warning"></i>&nbsp;&nbsp;
-              <i class="fa-solid fa-eye text-primary"></i>
+              <button (click)="Edit({item})" style="background: transparent; border: 0; padding: 0; margin: 0;" data-bs-toggle="modal" data-bs-target="#mdlUser">
+                <i class="fa-solid fa-pencil text-default" ></i>
+              </button>
+              &nbsp;
+              <button (click)="ShowModalDelete({item})" style="background: transparent; border: 0; padding: 0; margin: 0;">
+                <i class="fa-regular fa-trash-can text-danger"></i>
+              </button>
+              &nbsp;
+              <button (click)="ShowModalDeactivate({item})" style="background: transparent; border: 0; padding: 0; margin: 0;">
+                <i class="fa-regular fa-square-minus text-warning"></i>
+              </button>
+              &nbsp;
+              <button style="background: transparent; border: 0; padding: 0; margin: 0;">
+                <i class="fa-solid fa-eye text-primary"></i>
+              </button>
+              
             </td>
           </tr>
         </tbody>
@@ -84,7 +130,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="mdlUserLabel">Agregar Usuario</h5>
+        <h5 class="modal-title" id="mdlUserLabel">{{mdlTitle}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

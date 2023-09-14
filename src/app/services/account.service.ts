@@ -30,4 +30,28 @@ export class AccountService {
     return this.http.post<IResponseG>(`${this.url}WebAccount/Add`, data, { headers: reqHeader });
   }
 
+  Update(data: any){
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("strToken")
+    });
+    return this.http.post<IResponseG>(`${this.url}WebAccount/Update`, data, { headers: reqHeader });
+  }
+
+  Delete(data: any){
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("strToken")
+    });
+    return this.http.post<IResponseG>(`${this.url}WebAccount/Delete`, data, { headers: reqHeader });
+  }
+
+  Deactivate(data: any){
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("strToken")
+    });
+    return this.http.post<IResponseG>(`${this.url}WebAccount/Deactivate`, data, { headers: reqHeader });
+  }
+
 }

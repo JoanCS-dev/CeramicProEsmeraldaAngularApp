@@ -13,29 +13,37 @@ import { DataTableDirective } from 'angular-datatables';
 export class UserAdmonComponent implements OnInit {
 
   @ViewChild(DataTableDirective, {static: false})
-  dtElement: any = DataTableDirective;
-  
-  mdlErrorShow = false;
-  mdlErrorMessage = ""
+  public dtElement: any = DataTableDirective;
 
-  mdlSuccessShow = false;
-  mdlSuccessMessage = ""
+  public mdlTitle: string = "Agregar Cuenta"
 
-  mdlProgressShow = false;
-  mdlProgressHtml = `<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><small>Por favor espera un momento, este proceso puede tardar</small>`;
+  public mdlDeleteShow = false
+  public mdlDeactivateShow = false
   
-  lst_usuarios: any;
-  lst_perfiles: any
-  dtOptions: DataTables.Settings = { };
-  dtTrigger: Subject<any> = new Subject<any>();
-  spanish: any = Constants.ES_MX;
+  public mdlErrorShow = false;
+  public mdlErrorMessage = ""
+
+  public mdlSuccessShow = false;
+  public mdlSuccessMessage = ""
+
+  public mdlProgressShow = false;
+  public mdlProgressHtml = `<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><small>Por favor espera un momento, este proceso puede tardar</small>`;
+  
+  public delete_account: any
+  public deactivate_account: any
+
+  public lst_usuarios: any;
+  public lst_perfiles: any
+  public dtOptions: DataTables.Settings = { };
+  public dtTrigger: Subject<any> = new Subject<any>();
+  public spanish: any = Constants.ES_MX;
 
   get PeFirstName() {
-    return this.form_add.get("peFirstName")?.invalid && this.form_add.get("peFirstName")?.touched;
+    return this.form_add.controls.peopleVM.get("peFirstName")?.invalid && this.form_add.controls.peopleVM.get("peFirstName")?.touched;
   }
 
   get PeLastName() {
-    return this.form_add.get("peLastName")?.invalid && this.form_add.get("peLastName")?.touched;
+    return this.form_add.controls.peopleVM.get("peLastName")?.invalid && this.form_add.controls.peopleVM.get("peLastName")?.touched;
   }
 
   get AcUser() {
@@ -95,6 +103,26 @@ export class UserAdmonComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
+  Edit(d: any){
+    this.form_add.reset();
+    this.mdlTitle = "Editar Cuenta"
+    console.log(d);
+    
+    this.form_add.patchValue({
+      accountID: d.item.accountID,
+      acUser: d.item.acUser,
+      acPhoneNumber: d.item.acPhoneNumber,
+      profileID: d.item.profileID,
+      peopleID: d.item.peopleID,
+      peopleVM: {
+        peopleID: d.item.peopleID,
+        peFirstName: d.item.peopleVM.peFirstName,
+        peLastName: d.item.peopleVM.peLastName
+      }
+    });
+    
+  }
+
   SaveAs() {
     
     if(this.form_add.invalid){
@@ -105,26 +133,48 @@ export class UserAdmonComponent implements OnInit {
 
     this.mdlProgressShow = true;
 
-    this.accountServ.Add(this.form_add.value).subscribe({
-      next: (response) => {
-        if(response.ok){
-          this.mdlProgressShow = false;
-          this.mdlSuccessShow = true;
-          this.mdlSuccessMessage = response.message;
-          this.ResetFormAdd();
-        }else {
-          this.ShowError(response.message);
+    if(this.form_add.get("accountID")?.value == 0){
+      this.accountServ.Add(this.form_add.value).subscribe({
+        next: (response) => {
+          if(response.ok){
+            this.mdlProgressShow = false;
+            this.mdlSuccessShow = true;
+            this.mdlSuccessMessage = response.message;
+            this.ResetFormAdd();
+          }else {
+            this.ShowError(response.message);
+          }
+        },
+        error: (error) => {
+          this.ShowError(error.message);
         }
-      },
-      error: (error) => {
-        this.ShowError(error.message);
-      }
-    });
+      });
+    }else{
+      this.accountServ.Update(this.form_add.value).subscribe({
+        next: (response) => {
+          if(response.ok){
+            this.mdlProgressShow = false;
+            this.mdlSuccessShow = true;
+            this.mdlSuccessMessage = response.message;
+            this.ResetFormAdd();
+          }else {
+            this.ShowError(response.message);
+          }
+        },
+        error: (error) => {
+          this.ShowError(error.message);
+        }
+      });
+    }
+
+    
 
   }
 
   ResetFormAdd() {
+    this.mdlTitle = "Agregar Cuenta"
     this.form_add.reset();
+    console.log(this.form_add);
   }
 
   reload(){
@@ -167,6 +217,50 @@ export class UserAdmonComponent implements OnInit {
       }
     });
 
+  }
+
+  ShowModalDelete(d: any){
+    this.delete_account = d.item
+    this.mdlDeleteShow = true
+  }
+
+  ShowModalDeactivate(d: any){
+    this.deactivate_account = d.item;
+    this.mdlDeactivateShow = true
+  }
+
+  Delete(){
+    this.accountServ.Delete(this.delete_account).subscribe({
+      next: (response) => {
+        if(response.ok){
+          this.mdlProgressShow = false;
+          this.mdlSuccessShow = true;
+          this.mdlSuccessMessage = response.message;
+        }else {
+          this.ShowError(response.message);
+        }
+      },
+      error: (error) => {
+        this.ShowError(error.message);
+      }
+    });
+  }
+
+  Deactivate(){
+    this.accountServ.Deactivate(this.deactivate_account).subscribe({
+      next: (response) => {
+        if(response.ok){
+          this.mdlProgressShow = false;
+          this.mdlSuccessShow = true;
+          this.mdlSuccessMessage = response.message;
+        }else {
+          this.ShowError(response.message);
+        }
+      },
+      error: (error) => {
+        this.ShowError(error.message);
+      }
+    });
   }
 
   private ShowError(error: any){

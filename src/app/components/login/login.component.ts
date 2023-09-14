@@ -12,6 +12,8 @@ export class LoginComponent {
   public mdlShow = false;
   public mdlTitle = "";
   public mdlMessage = ""
+  public isLoading = false
+  public textBtnLogin = "Iniciar Sesión"
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +42,8 @@ export class LoginComponent {
         control.markAllAsTouched();
       });
     }
+    this.isLoading = true
+    this.textBtnLogin = "Validando Información"
     this.serv.auth(this.login.value).subscribe({
       next: (response) => {
         if(response.ok){
@@ -51,12 +55,16 @@ export class LoginComponent {
           this.mdlShow = true;
           this.mdlTitle = "Error " + response.title;
           this.mdlMessage = response.message;
+          this.textBtnLogin = "Iniciar Sesión"
+          this.isLoading = false
         }
       },
       error: (error) => {
         this.mdlShow = true;
         this.mdlTitle = "Error " + error.status;
         this.mdlMessage = error.message;
+        this.textBtnLogin = "Iniciar Sesión"
+        this.isLoading = false
       }
     });
   }

@@ -98,7 +98,9 @@
             ],
             "scripts": [
               "src/assets/js/bootstrap.bundle.min.js",
-              "src/assets/js/scripts.js"
+              "src/assets/js/scripts.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.min.js"
             ]
           }
         }

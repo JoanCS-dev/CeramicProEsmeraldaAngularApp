@@ -27,7 +27,7 @@ export class UserAdmonComponent implements OnInit {
   public mdlSuccessMessage = ""
 
   public mdlProgressShow = false;
-  public mdlProgressHtml = `<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><small>Por favor espera un momento, este proceso puede tardar</small>`;
+  public mdlProgressHtml = Constants.HTML_PROGRESS;
   
   public delete_account: any
   public deactivate_account: any
@@ -178,6 +178,7 @@ export class UserAdmonComponent implements OnInit {
   }
 
   reload(){
+    this.mdlSuccessShow = false;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
@@ -187,7 +188,6 @@ export class UserAdmonComponent implements OnInit {
   }
 
   load() {
-    this.lst_usuarios = [];
 
     this.accountServ.List().subscribe({
       next: (response) => {
@@ -195,6 +195,8 @@ export class UserAdmonComponent implements OnInit {
           this.lst_usuarios = response.data;
           this.dtTrigger.next(null);
           this.mdlProgressShow = false;
+        }else{
+          this.ShowError(response.message);
         }
       },
       error: (error) => {

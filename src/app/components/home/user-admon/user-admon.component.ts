@@ -230,6 +230,9 @@ export class UserAdmonComponent implements OnInit {
   }
 
   Delete(){
+    this.mdlDeleteShow = false
+    this.mdlProgressShow = true;
+
     this.accountServ.Delete(this.delete_account).subscribe({
       next: (response) => {
         if(response.ok){
@@ -247,6 +250,9 @@ export class UserAdmonComponent implements OnInit {
   }
 
   Deactivate(){
+    this.mdlDeactivateShow = false;
+    this.mdlProgressShow = true;
+
     this.accountServ.Deactivate(this.deactivate_account).subscribe({
       next: (response) => {
         if(response.ok){

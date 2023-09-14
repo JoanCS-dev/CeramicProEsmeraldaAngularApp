@@ -36,7 +36,8 @@ export class QuotesComponent {
 
   ngOnInit(){
     this.dtOptions = {
-      language: this.spanish
+      language: this.spanish,
+      order:[[4, 'desc']]
     };
     this.load();
   }

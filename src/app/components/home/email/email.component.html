@@ -1,0 +1,139 @@
+<swal *ngIf="mdlConfirmTimeout" icon="question" title="Usuario Inactivo" text="El cancelará la cita"
+    confirmButtonText="Usted permaneció mas de 5 minutos inactivo, si necesita mas tiempo de clic en continuar conectado, de lo contrario su sesión terminará y tendrá que iniciar sesión nuevamente."
+    [showConfirmButton]="true" [showCancelButton]="false" [allowEnterKey]="false" [allowEnterKey]="false"
+    [allowOutsideClick]="false" [swalFireOnInit]="true" (confirm)="ContinueConnect()">
+</swal>
+
+<swal *ngIf="mdlProgressShow" html="{{mdlProgressHtml}}" title="Procesando Información" [showConfirmButton]="false"
+    [allowEnterKey]="false" [allowEnterKey]="false" [allowOutsideClick]="false" [swalFireOnInit]="true"
+    (didClose)="mdlProgressShow = false">
+</swal>
+
+<swal *ngIf="mdlErrorShow" icon="error" title="Error" text="{{ mdlErrorMessage }}" [showConfirmButton]="true"
+    [allowEnterKey]="false" [allowEnterKey]="false" [allowOutsideClick]="false" [swalFireOnInit]="true"
+    (didClose)="mdlErrorShow = false">
+</swal>
+
+<swal *ngIf="mdlSuccessShow" icon="success" title="Correcto" text="{{ mdlSuccessMessage }}" [showConfirmButton]="true"
+    [allowEnterKey]="false" [allowEnterKey]="false" [allowOutsideClick]="false" [swalFireOnInit]="true"
+    (confirm)="reload()" (didClose)="mdlSuccessShow = false">
+</swal>
+
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                Lista de correos
+            </div>
+            <div class="col-md-6 text-end"></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                class="table table-bordered table-sm table-hover ">
+                <thead>
+                    <tr>
+                        <th>Subjeto</th>
+                        <th>Correo Emisor</th>
+                        <th>Correo Receptor</th>
+                        <th>Correo CC</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of lst_emails">
+                        <td>{{ item.emSubject }}</td>
+                        <td>{{ item.emEmail }}</td>
+                        <td>{{ item.emEnviarEmail }}</td>
+                        <td>{{ item.emEmailCC }}</td>
+                        <td class="text-center">
+                            <button style="background: transparent; border: 0; padding: 0; margin: 0;" data-bs-toggle="modal" data-bs-target="#mdlAddUpdateEmail">
+                                <i class="fa-solid fa-pencil text-default"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlAddUpdateEmail" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="labelmdlAddUpdateEmail">Administración correos.</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="form_email" (ngSubmit)="SaveAs()">
+            <div class="row">
+                <div class="col-md-6 mt-2">
+                  <div class="form-group">
+                    <label class="required font-weight-bold">Subjeto</label>
+                    <input type="text" class="form-control" placeholder="Escribe aquí" formControlName="emSubject"/>
+                  </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                  <div class="form-group">
+                    <label class="font-weight-bold">Correos CC</label>
+                    <input type="text" class="form-control" placeholder="correo1@rgo.com.mx; correo2@rgo.com.mx" formControlName="emEmailCC"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mt-2">
+                  <div class="form-group">
+                    <label class="required font-weight-bold">Correo Emisor</label>
+                    <input type="email" class="form-control" placeholder="Escribe aquí" formControlName="emEmail"/>
+                  </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                  <div class="form-group">
+                    <label class="required font-weight-bold">Contraseña del correo emisor</label>
+                    <input type="password" class="form-control" placeholder="****************************" formControlName="emPassword"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mt-2">
+                  <br />
+                  <div class="form-radio mt-2">
+                    <div class="radio radiofill radio-info radio-inline">
+                      <div class="checkbox-fade fade-in-primary">
+                        <label style="padding-left: 0;">
+                          <input type="checkbox">
+                          <span class="cr">
+                            <i class="cr-icon ik ik-check txt-primary"></i>
+                          </span>
+                          <span>Agregar envio a</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                  <label class="required font-weight-bold">Correo a enviar</label>
+                  <input type="email" class="form-control" placeholder="correo1@rgo.com.mx" [disabled]="true" formControlName="emEnviarEmail"/>
+                </div>
+              </div>
+              <div class="form-group mt-2">
+                <label class="required font-weight-bold">Cuerpo del correo</label>
+                <angular-editor formControlName="emBody" [config]="editorConfig"></angular-editor>
+              </div>
+              <div class="row  mt-2">
+                <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save"></i> Guardar Cambios
+                  </button>
+                </div>
+              </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>

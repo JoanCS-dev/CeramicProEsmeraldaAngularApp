@@ -13,6 +13,8 @@ import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { DataTablesModule } from "angular-datatables";
 import { QuotesComponent } from './components/home/quotes/quotes.component';
 import { provideUserIdleConfig } from "angular-user-idle";
+import { EmailComponent } from './components/home/email/email.component';
+import { AngularEditorModule } from "@kolkov/angular-editor";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { provideUserIdleConfig } from "angular-user-idle";
     PageNotFoundComponent,
     MainComponent,
     UserAdmonComponent,
-    QuotesComponent
+    QuotesComponent,
+    EmailComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { provideUserIdleConfig } from "angular-user-idle";
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    AngularEditorModule 
   ],
   providers: [
     // provideUserIdleConfig({ idle: 600, timeout: 300, ping: 120 })

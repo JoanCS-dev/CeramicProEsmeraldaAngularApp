@@ -6,12 +6,14 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { MainComponent } from './components/home/main/main.component';
 import { UserAdmonComponent } from './components/home/user-admon/user-admon.component';
 import { QuotesComponent } from './components/home/quotes/quotes.component';
+import { EmailComponent } from './components/home/email/email.component';
 
 const routes_home: Routes = [
   { path: "", component: MainComponent },
   { path: "main", component: MainComponent },
   { path: "users", component: UserAdmonComponent },
   { path: "quotes", component: QuotesComponent },
+  { path: "emails", component: EmailComponent },
   { path: "**", component: PageNotFoundComponent }
 ];
 

@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.2.3",
+    "@kolkov/angular-editor": "^3.0.0-beta.0",
     "@sweetalert2/ngx-sweetalert2": "^12.2.0",
     "angular-datatables": "^16.0.0",
     "angular-user-idle": "^4.0.0",

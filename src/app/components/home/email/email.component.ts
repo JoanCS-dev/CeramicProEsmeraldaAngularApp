@@ -1,24 +1,25 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DataTableDirective } from 'angular-datatables';
 import { UserIdleService } from 'angular-user-idle';
 import { Subject } from 'rxjs';
-import { QuotesService } from 'src/app/services/quotes.service';
+import { EmailService } from 'src/app/services/email.service';
 import { Constants } from 'src/app/tools/Constants';
 
 @Component({
-  selector: 'app-quotes',
-  templateUrl: './quotes.component.html'
+  selector: 'app-email',
+  templateUrl: './email.component.html'
 })
-export class QuotesComponent {
-
+export class EmailComponent {
   @ViewChild(DataTableDirective, {static: false})
   public dtElement: any = DataTableDirective;
   public dtOptions: DataTables.Settings = { };
   public dtTrigger: Subject<any> = new Subject<any>();
   public spanish: any = Constants.ES_MX;
 
-  public lst_quotes: any;
+  public lst_emails: any;
 
   public mdlErrorShow = false;
   public mdlErrorMessage = ""
@@ -28,18 +29,70 @@ export class QuotesComponent {
 
   public mdlProgressShow = false;
   public mdlProgressHtml = Constants.HTML_PROGRESS;
-  
+
   public mdlConfirmAccept = false;
   public mdlConfirmCancel = false;
-
-  public item_accept_or_cancel: any;
 
   // Begin variables the Timeout
   public mdlConfirmTimeout: boolean = false;
   public minutes_timeout = 0
   // End variable the Timeout
-  
-  constructor(private quotesService: QuotesService, private userIdle: UserIdleService, private router: Router) {}
+
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+      spellcheck: true,
+      height: 'auto',
+      minHeight: '0',
+      maxHeight: 'auto',
+      width: 'auto',
+      minWidth: '0',
+      translate: 'yes',
+      enableToolbar: true,
+      showToolbar: true,
+      placeholder: 'Enter text here...',
+      defaultParagraphSeparator: '',
+      defaultFontName: '',
+      defaultFontSize: '',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ],
+      customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ],
+};
+
+  public form_email= this.fb.group({
+    emailID: [0, {nonNullable: false}],
+    emSubject: [''],
+    emBody: [''],
+    emEmail: [''],
+    emPassword: [''],
+    emEnviarSts: [false, {nonNullable: false}],
+    emEnviarEmail: [''],
+    emEmailCC: [''],
+    emSTS: ['']
+  });;
+
+  constructor(private emailService: EmailService, private userIdle: UserIdleService, private router: Router, private fb: FormBuilder) {}
 
   ngOnInit(){
     this.userIdle.startWatching();
@@ -55,8 +108,9 @@ export class QuotesComponent {
     });
     this.dtOptions = {
       language: this.spanish,
-      order:[[4, 'desc']]
+      order:[[0, 'desc']]
     };
+
     this.load();
   }
 
@@ -68,10 +122,10 @@ export class QuotesComponent {
 
     this.mdlProgressShow = true;
 
-    this.quotesService.List().subscribe({
+    this.emailService.List().subscribe({
       next: (response) => {
         if(response.ok){
-          this.lst_quotes = response.data;
+          this.lst_emails = response.data;
           this.dtTrigger.next(null);
           this.mdlProgressShow = false;
         }else{
@@ -95,54 +149,8 @@ export class QuotesComponent {
     });
   }
 
-  ShowConfirmAccept(d: any){
-    this.item_accept_or_cancel = d.item;
-    this.mdlConfirmAccept = true;
-  }
+  SaveAs() : void {
 
-  ShowConfirmCancel(d: any){
-    this.item_accept_or_cancel = d.item;
-    this.mdlConfirmCancel = true;
-  }
-
-  Accept(){
-    this.mdlConfirmAccept = false;
-    this.mdlProgressShow = true;
-
-    this.quotesService.Accept(this.item_accept_or_cancel).subscribe({
-      next: (response) => {
-        if(response.ok){
-          this.mdlProgressShow = false;
-          this.mdlSuccessShow = true;
-          this.mdlSuccessMessage = response.message;
-        }else{
-          this.ShowError(response.message);
-        }
-      },
-      error: (error) => {
-        this.ShowError(error.message);
-      } 
-    })
-  }
-
-  Cancel(){
-    this.mdlConfirmCancel = false;
-    this.mdlProgressShow = true;
-
-    this.quotesService.Cancel(this.item_accept_or_cancel).subscribe({
-      next: (response) => {
-        if(response.ok){
-          this.mdlProgressShow = false;
-          this.mdlSuccessShow = true;
-          this.mdlSuccessMessage = response.message;
-        }else{
-          this.ShowError(response.message);
-        }
-      },
-      error: (error) => {
-        this.ShowError(error.message);
-      } 
-    })
   }
 
   ContinueConnect(): void {
@@ -156,5 +164,4 @@ export class QuotesComponent {
     this.mdlErrorShow = true;
     this.mdlErrorMessage = error;
   }
-
 }

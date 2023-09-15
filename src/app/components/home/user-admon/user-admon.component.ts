@@ -5,6 +5,8 @@ import { AccountService } from 'src/app/services/account.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Constants } from 'src/app/tools/Constants';
 import { DataTableDirective } from 'angular-datatables';
+import { UserIdleService } from 'angular-user-idle';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-admon',
@@ -37,6 +39,11 @@ export class UserAdmonComponent implements OnInit {
   public dtOptions: DataTables.Settings = { };
   public dtTrigger: Subject<any> = new Subject<any>();
   public spanish: any = Constants.ES_MX;
+
+  // Begin variables the Timeout
+  public mdlConfirmTimeout: boolean = false;
+  public minutes_timeout = 0
+  // End variable the Timeout
 
   get PeFirstName() {
     return this.form_add.controls.peopleVM.get("peFirstName")?.invalid && this.form_add.controls.peopleVM.get("peFirstName")?.touched;
@@ -85,12 +92,25 @@ export class UserAdmonComponent implements OnInit {
   constructor(
     private accountServ: AccountService,
     private profileServ: ProfileService,
-    private fb: FormBuilder
+    private fb: FormBuilder, 
+    private userIdle: UserIdleService, 
+    private router: Router
   ){
     
   }
 
   ngOnInit(): void {
+    this.userIdle.startWatching();
+    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    this.userIdle.onTimeout().subscribe(() => {
+      this.mdlConfirmTimeout = true;
+      this.minutes_timeout++;
+      if(this.minutes_timeout>60){
+        this.userIdle.stopWatching();
+        this.userIdle.stopTimer();
+        this.router.navigate(['/'])
+      }
+    });
     this.mdlProgressShow = true;
     this.dtOptions = {
       language: this.spanish
@@ -269,6 +289,12 @@ export class UserAdmonComponent implements OnInit {
         this.ShowError(error.message);
       }
     });
+  }
+
+  ContinueConnect(): void {
+    this.userIdle.resetTimer();
+    this.minutes_timeout = 0;
+    this.mdlConfirmTimeout = false;
   }
 
   private ShowError(error: any){

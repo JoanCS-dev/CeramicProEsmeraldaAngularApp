@@ -1,1 +1,16 @@
+<swal
+  *ngIf="mdlConfirmTimeout"
+  icon="question"
+  title="Usuario Inactivo"
+  text="El cancelará la cita"
+  confirmButtonText="Usted permaneció mas de 5 minutos inactivo, si necesita mas tiempo de clic en continuar conectado, de lo contrario su sesión terminará y tendrá que iniciar sesión nuevamente."
+  [showConfirmButton]="true"
+  [showCancelButton]="false"
+  [allowEnterKey]="false"
+  [allowEnterKey]="false"
+  [allowOutsideClick]="false"
+  [swalFireOnInit]="true"
+  (confirm)="ContinueConnect()">
+</swal>
+
 <p>main works!</p>

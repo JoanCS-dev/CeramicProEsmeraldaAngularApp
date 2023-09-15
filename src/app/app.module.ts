@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { DataTablesModule } from "angular-datatables";
 import { QuotesComponent } from './components/home/quotes/quotes.component';
+import { provideUserIdleConfig } from "angular-user-idle";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,10 @@ import { QuotesComponent } from './components/home/quotes/quotes.component';
     HttpClientModule,
     DataTablesModule
   ],
-  providers: [],
+  providers: [
+    // provideUserIdleConfig({ idle: 600, timeout: 300, ping: 120 })
+    provideUserIdleConfig({ idle: 300, timeout: 300, ping: 120 })
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

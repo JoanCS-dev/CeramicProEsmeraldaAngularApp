@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
+import { UserIdleService } from 'angular-user-idle';
 import { Subject } from 'rxjs';
 import { QuotesService } from 'src/app/services/quotes.service';
 import { Constants } from 'src/app/tools/Constants';
@@ -31,10 +33,26 @@ export class QuotesComponent {
   public mdlConfirmCancel = false;
 
   public item_accept_or_cancel: any;
+
+   // Begin variables the Timeout
+   public mdlConfirmTimeout: boolean = false;
+   public minutes_timeout = 0
+   // End variable the Timeout
   
-  constructor(private quotesService: QuotesService) {}
+  constructor(private quotesService: QuotesService, private userIdle: UserIdleService, private router: Router) {}
 
   ngOnInit(){
+    this.userIdle.startWatching();
+    this.userIdle.onTimerStart().subscribe(count => console.log(count));
+    this.userIdle.onTimeout().subscribe(() => {
+      this.mdlConfirmTimeout = true;
+      this.minutes_timeout++;
+      if(this.minutes_timeout>60){
+        this.userIdle.stopWatching();
+        this.userIdle.stopTimer();
+        this.router.navigate(['/'])
+      }
+    });
     this.dtOptions = {
       language: this.spanish,
       order:[[4, 'desc']]
@@ -125,6 +143,12 @@ export class QuotesComponent {
         this.ShowError(error.message);
       } 
     })
+  }
+
+  ContinueConnect(): void {
+    this.userIdle.resetTimer();
+    this.minutes_timeout = 0;
+    this.mdlConfirmTimeout = false;
   }
 
   private ShowError(error: any){

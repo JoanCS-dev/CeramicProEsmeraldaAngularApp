@@ -27,7 +27,9 @@
             <div class="col-md-6">
                 Lista de correos
             </div>
-            <div class="col-md-6 text-end"></div>
+            <div class="col-md-6 text-end">
+              <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#mdlAddUpdateEmail" (click)="ResetFormAdd()"><i class="fa fa-plus"></i>&nbsp;Agregar Correo</button>
+            </div>
         </div>
     </div>
     <div class="card-body">
@@ -50,7 +52,7 @@
                         <td>{{ item.emEnviarEmail }}</td>
                         <td>{{ item.emEmailCC }}</td>
                         <td class="text-center">
-                            <button style="background: transparent; border: 0; padding: 0; margin: 0;" data-bs-toggle="modal" data-bs-target="#mdlAddUpdateEmail">
+                            <button (click)="Edit({item})" style="background: transparent; border: 0; padding: 0; margin: 0;" data-bs-toggle="modal" data-bs-target="#mdlAddUpdateEmail">
                                 <i class="fa-solid fa-pencil text-default"></i>
                             </button>
                         </td>
@@ -65,7 +67,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="labelmdlAddUpdateEmail">Administración correos.</h5>
+          <h5 class="modal-title" id="labelmdlAddUpdateEmail">Administración de correos.</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -74,13 +76,13 @@
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="required font-weight-bold">Subjeto</label>
-                    <input type="text" class="form-control" placeholder="Escribe aquí" formControlName="emSubject"/>
+                    <input type="text" class="form-control form-control-sm" placeholder="Escribe aquí" formControlName="emSubject"/>
                   </div>
                 </div>
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="font-weight-bold">Correos CC</label>
-                    <input type="text" class="form-control" placeholder="correo1@rgo.com.mx; correo2@rgo.com.mx" formControlName="emEmailCC"/>
+                    <input type="text" class="form-control form-control-sm" placeholder="correo1@rgo.com.mx; correo2@rgo.com.mx" formControlName="emEmailCC"/>
                   </div>
                 </div>
               </div>
@@ -88,41 +90,34 @@
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="required font-weight-bold">Correo Emisor</label>
-                    <input type="email" class="form-control" placeholder="Escribe aquí" formControlName="emEmail"/>
+                    <input type="email" class="form-control form-control-sm" placeholder="Escribe aquí" formControlName="emEmail"/>
                   </div>
                 </div>
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="required font-weight-bold">Contraseña del correo emisor</label>
-                    <input type="password" class="form-control" placeholder="****************************" formControlName="emPassword"/>
+                    <input type="password" class="form-control form-control-sm" placeholder="****************************" formControlName="emPassword"/>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 mt-2">
                   <br />
-                  <div class="form-radio mt-2">
-                    <div class="radio radiofill radio-info radio-inline">
-                      <div class="checkbox-fade fade-in-primary">
-                        <label style="padding-left: 0;">
-                          <input type="checkbox">
-                          <span class="cr">
-                            <i class="cr-icon ik ik-check txt-primary"></i>
-                          </span>
-                          <span>Agregar envio a</span>
-                        </label>
-                      </div>
-                    </div>
+
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" id="chSts" type="checkbox" value="" formControlName="emEnviarSts">
+                    <label class="form-check-label" for="chSts">Agregar envio a</label>
                   </div>
+                  
                 </div>
                 <div class="col-md-6 mt-2">
                   <label class="required font-weight-bold">Correo a enviar</label>
-                  <input type="email" class="form-control" placeholder="correo1@rgo.com.mx" [disabled]="true" formControlName="emEnviarEmail"/>
+                  <input type="email" class="form-control form-control-sm" placeholder="correo1@rgo.com.mx" [disabled]="true" formControlName="emEnviarEmail"/>
                 </div>
               </div>
               <div class="form-group mt-2">
                 <label class="required font-weight-bold">Cuerpo del correo</label>
-                <angular-editor formControlName="emBody" [config]="editorConfig"></angular-editor>
+                <angular-editor formControlName="emBody" [config]="editorConfig" class="form-control form-control-sm"></angular-editor>
               </div>
               <div class="row  mt-2">
                 <div class="col-md-12 text-center">

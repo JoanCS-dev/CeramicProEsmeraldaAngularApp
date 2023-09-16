@@ -33,6 +33,8 @@ export class EmailComponent {
   public mdlConfirmAccept = false;
   public mdlConfirmCancel = false;
 
+  public mdlTitle: string = "Agregar Correo";
+
   // Begin variables the Timeout
   public mdlConfirmTimeout: boolean = false;
   public minutes_timeout = 0
@@ -151,6 +153,29 @@ export class EmailComponent {
 
   SaveAs() : void {
 
+  }
+
+  Edit(d: any){
+    this.form_email.reset();
+    this.mdlTitle = "Editar Correo"
+    console.log(d);
+    
+    this.form_email.patchValue({
+      emailID: d.item.emailID,
+      emSubject: d.item.emSubject,
+      emBody: d.item.emBody,
+      emEmail: d.item.emEmail,
+      emPassword: d.item.emPassword,
+      emEnviarSts: d.item.emEnviarSts,
+      emEnviarEmail: d.item.emEnviarEmail,
+      emEmailCC: d.item.emEmailCC,
+      emSTS: d.item.emSTS
+    });
+  }
+
+  ResetFormAdd() : void {
+    this.mdlTitle = "Agregar Correo"
+    this.form_email.reset();
   }
 
   ContinueConnect(): void {

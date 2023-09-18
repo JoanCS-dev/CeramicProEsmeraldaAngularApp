@@ -1,5 +1,5 @@
 export class Constants {
-    public static URL: string = "https://ceramicproesmeralda.azurewebsites.net/Api/";
+    public static URL: string = "https://ceramicproesmeraldaapi.azurewebsites.net/Api/";
     public static HTML_PROGRESS: string = `<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div><small>Por favor espera un momento, este proceso puede tardar</small>`;
     public static ES_MX: any = {
         "processing": "Procesando...",

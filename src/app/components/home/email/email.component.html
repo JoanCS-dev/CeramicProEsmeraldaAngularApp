@@ -1,7 +1,11 @@
-<swal *ngIf="mdlConfirmTimeout" icon="question" title="Usuario Inactivo" text="El cancelará la cita"
-    confirmButtonText="Usted permaneció mas de 5 minutos inactivo, si necesita mas tiempo de clic en continuar conectado, de lo contrario su sesión terminará y tendrá que iniciar sesión nuevamente."
-    [showConfirmButton]="true" [showCancelButton]="false" [allowEnterKey]="false" [allowEnterKey]="false"
-    [allowOutsideClick]="false" [swalFireOnInit]="true" (confirm)="ContinueConnect()">
+<swal 
+  *ngIf="mdlConfirmTimeout" 
+  icon="question" 
+  title="Usuario Inactivo" 
+  text="Usted permaneció mas de 5 minutos inactivo, si necesita mas tiempo de clic en continuar conectado, de lo contrario su sesión terminará y tendrá que iniciar sesión nuevamente."
+  confirmButtonText="Continuar Conectado"
+  [showConfirmButton]="true" [showCancelButton]="false" [allowEnterKey]="false" [allowEnterKey]="false"
+  [allowOutsideClick]="false" [swalFireOnInit]="true" (confirm)="ContinueConnect()">
 </swal>
 
 <swal *ngIf="mdlProgressShow" html="{{mdlProgressHtml}}" title="Procesando Información" [showConfirmButton]="false"
@@ -76,13 +80,15 @@
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="required font-weight-bold">Subjeto</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Escribe aquí" formControlName="emSubject"/>
+                    <input type="text" class="form-control form-control-sm" placeholder="Escribe aquí" formControlName="emSubject" [class.is-invalid]="emSubject"/>
+                    <small class="text-danger text-small" *ngIf="emSubject">Este campo requiere 3 caracteres como mínimo</small>
                   </div>
                 </div>
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="font-weight-bold">Correos CC</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="correo1@rgo.com.mx; correo2@rgo.com.mx" formControlName="emEmailCC"/>
+                    <input type="text" class="form-control form-control-sm" placeholder="correo1@rgo.com.mx; correo2@rgo.com.mx" formControlName="emEmailCC" [class.is-invalid]="emEmailCC"/>
+                    <small class="text-danger text-small" *ngIf="emEmailCC">Este campo requiere 3 caracteres como mínimo</small>
                   </div>
                 </div>
               </div>
@@ -90,13 +96,15 @@
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="required font-weight-bold">Correo Emisor</label>
-                    <input type="email" class="form-control form-control-sm" placeholder="Escribe aquí" formControlName="emEmail"/>
+                    <input type="email" class="form-control form-control-sm" placeholder="Escribe aquí" formControlName="emEmail" [class.is-invalid]="emSubject"/>
+                    <small class="text-danger text-small" *ngIf="emEmail">Por favor escribe un correo valido</small>
                   </div>
                 </div>
                 <div class="col-md-6 mt-2">
                   <div class="form-group">
                     <label class="required font-weight-bold">Contraseña del correo emisor</label>
-                    <input type="password" class="form-control form-control-sm" placeholder="****************************" formControlName="emPassword"/>
+                    <input type="password" class="form-control form-control-sm" placeholder="****************************" formControlName="emPassword" [class.is-invalid]="emPassword"/>
+                    <small class="text-danger text-small" *ngIf="emPassword">Este campo requiere 6 caracteres como mínimo</small>
                   </div>
                 </div>
               </div>
@@ -105,24 +113,25 @@
                   <br />
 
                   <div class="form-check mt-2">
-                    <input class="form-check-input" id="chSts" type="checkbox" value="" formControlName="emEnviarSts">
+                    <input class="form-check-input" id="chSts" type="checkbox" value="" formControlName="emEnviarSts" (change)="ChangeSTS()">
                     <label class="form-check-label" for="chSts">Agregar envio a</label>
                   </div>
                   
                 </div>
                 <div class="col-md-6 mt-2">
                   <label class="required font-weight-bold">Correo a enviar</label>
-                  <input type="email" class="form-control form-control-sm" placeholder="correo1@rgo.com.mx" [disabled]="true" formControlName="emEnviarEmail"/>
+                  <input type="email" class="form-control form-control-sm" placeholder="correo1@rgo.com.mx" formControlName="emEnviarEmail"/>
                 </div>
               </div>
               <div class="form-group mt-2">
                 <label class="required font-weight-bold">Cuerpo del correo</label>
-                <angular-editor formControlName="emBody" [config]="editorConfig" class="form-control form-control-sm"></angular-editor>
+                <angular-editor formControlName="emBody" [config]="editorConfig" class="form-control form-control-sm" [class.is-invalid]="emBody"></angular-editor>
+                <small class="text-danger text-small" *ngIf="emBody">Este campo requiere 6 caracteres como mínimo</small>
               </div>
               <div class="row  mt-2">
                 <div class="col-md-12 text-center">
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save"></i> Guardar Cambios
+                  <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="fa fa-save"></i>&nbsp;Guardar Cambios
                   </button>
                 </div>
               </div>

@@ -17,4 +17,20 @@ export class EmailService {
     });
     return this.http.post<IResponseG>(`${this.url}WebEmail/Lst`, {}, { headers: reqHeader });
   }
+
+  Add(data: any) {
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("strToken")
+    });
+    return this.http.post<IResponseG>(`${this.url}WebEmail/Add`, data, { headers: reqHeader });
+  }
+
+  Update(data: any) {
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem("strToken")
+    });
+    return this.http.post<IResponseG>(`${this.url}WebEmail/Update`, data, { headers: reqHeader });
+  }
 }

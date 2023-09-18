@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DataTableDirective } from 'angular-datatables';
@@ -39,6 +39,7 @@ export class EmailComponent {
   public mdlConfirmTimeout: boolean = false;
   public minutes_timeout = 0
   // End variable the Timeout
+  
 
   public editorConfig: AngularEditorConfig = {
     editable: true,
@@ -84,15 +85,35 @@ export class EmailComponent {
 
   public form_email= this.fb.group({
     emailID: [0, {nonNullable: false}],
-    emSubject: [''],
-    emBody: [''],
-    emEmail: [''],
-    emPassword: [''],
+    emSubject: ['', [Validators.required, Validators.minLength(3)]],
+    emBody: ['', [Validators.required, Validators.minLength(6)]],
+    emEmail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+    emPassword: ['', [Validators.required, Validators.minLength(6)]],
     emEnviarSts: [false, {nonNullable: false}],
-    emEnviarEmail: [''],
+    emEnviarEmail: [{value: '', disabled: true}],
     emEmailCC: [''],
     emSTS: ['']
-  });;
+  });
+
+  emSubject() {
+    return this.form_email.get("emSubject")?.invalid && this.form_email.get("emSubject")?.touched;
+  }
+
+  emBody() {
+    return this.form_email.get("emBody")?.invalid && this.form_email.get("emBody")?.touched;
+  }
+
+  emEmail() {
+    return this.form_email.get("emEmail")?.invalid && this.form_email.get("emEmail")?.touched;
+  }
+
+  emPassword() {
+    return this.form_email.get("emPassword")?.invalid && this.form_email.get("emPassword")?.touched;
+  }
+
+  emEmailCC() {
+    return this.form_email.get("emEmailCC")?.invalid && this.form_email.get("emEmailCC")?.touched;
+  }
 
   constructor(private emailService: EmailService, private userIdle: UserIdleService, private router: Router, private fb: FormBuilder) {}
 
@@ -152,7 +173,51 @@ export class EmailComponent {
   }
 
   SaveAs() : void {
+    if(this.form_email.invalid){
+      return Object.values(this.form_email.controls).forEach(control => {
+        control.markAllAsTouched();
+      });
+    }
 
+    this.mdlProgressShow = true;
+
+    if(this.form_email.get("accountID")?.value == 0){
+
+      this.emailService.Add(this.form_email.value).subscribe({
+        next: (response) => {
+          if(response.ok){
+            this.mdlProgressShow = false;
+            this.mdlSuccessShow = true;
+            this.mdlSuccessMessage = response.message;
+            this.ResetFormAdd();
+          }else {
+            this.ShowError(response.message);
+          }
+        },
+        error: (error) => {
+          this.ShowError(error.message);
+        }
+      });
+
+    }else{
+
+      this.emailService.Update(this.form_email.value).subscribe({
+        next: (response) => {
+          if(response.ok){
+            this.mdlProgressShow = false;
+            this.mdlSuccessShow = true;
+            this.mdlSuccessMessage = response.message;
+            this.ResetFormAdd();
+          }else {
+            this.ShowError(response.message);
+          }
+        },
+        error: (error) => {
+          this.ShowError(error.message);
+        }
+      });
+
+    }
   }
 
   Edit(d: any){
@@ -182,6 +247,15 @@ export class EmailComponent {
     this.userIdle.resetTimer();
     this.minutes_timeout = 0;
     this.mdlConfirmTimeout = false;
+  }
+
+  ChangeSTS(): void {
+    
+    if(Boolean(this.form_email.get("emEnviarSts")?.value)){
+      this.form_email.get("emEnviarEmail")?.enable();
+    }else{
+      this.form_email.get("emEnviarEmail")?.disable();
+    }
   }
 
   private ShowError(error: any){

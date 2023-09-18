@@ -126,7 +126,6 @@ export class UserAdmonComponent implements OnInit {
   Edit(d: any){
     this.form_add.reset();
     this.mdlTitle = "Editar Cuenta"
-    console.log(d);
     
     this.form_add.patchValue({
       accountID: d.item.accountID,
@@ -194,7 +193,6 @@ export class UserAdmonComponent implements OnInit {
   ResetFormAdd() {
     this.mdlTitle = "Agregar Cuenta"
     this.form_add.reset();
-    console.log(this.form_add);
   }
 
   reload(){

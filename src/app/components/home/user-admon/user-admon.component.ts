@@ -175,7 +175,7 @@ export class UserAdmonComponent implements OnInit {
             this.mdlProgressShow = false;
             this.mdlSuccessShow = true;
             this.mdlSuccessMessage = response.message;
-            this.ResetFormAdd();
+            //this.ResetFormAdd();
           }else {
             this.ShowError(response.message);
           }

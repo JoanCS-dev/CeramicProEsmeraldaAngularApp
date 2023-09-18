@@ -22,10 +22,10 @@ export class EmailComponent {
   public lst_emails: any;
 
   public mdlErrorShow = false;
-  public mdlErrorMessage = ""
+  public mdlErrorMessage = "";
 
   public mdlSuccessShow = false;
-  public mdlSuccessMessage = ""
+  public mdlSuccessMessage = "";
 
   public mdlProgressShow = false;
   public mdlProgressHtml = Constants.HTML_PROGRESS;
@@ -37,7 +37,7 @@ export class EmailComponent {
 
   // Begin variables the Timeout
   public mdlConfirmTimeout: boolean = false;
-  public minutes_timeout = 0
+  public minutes_timeout = 0;
   // End variable the Timeout
   
 
@@ -84,34 +84,34 @@ export class EmailComponent {
 };
 
   public form_email= this.fb.group({
-    emailID: [0, {nonNullable: false}],
+    emailID: [0, { nonNullable: true }],
     emSubject: ['', [Validators.required, Validators.minLength(3)]],
     emBody: ['', [Validators.required, Validators.minLength(6)]],
     emEmail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
     emPassword: ['', [Validators.required, Validators.minLength(6)]],
-    emEnviarSts: [false, {nonNullable: false}],
+    emEnviarSts: [false, {nonNullable: true}],
     emEnviarEmail: [{value: '', disabled: true}],
     emEmailCC: [''],
     emSTS: ['']
   });
 
-  emSubject() {
+  get emSubject() {
     return this.form_email.get("emSubject")?.invalid && this.form_email.get("emSubject")?.touched;
   }
 
-  emBody() {
+  get emBody() {
     return this.form_email.get("emBody")?.invalid && this.form_email.get("emBody")?.touched;
   }
 
-  emEmail() {
+  get emEmail() {
     return this.form_email.get("emEmail")?.invalid && this.form_email.get("emEmail")?.touched;
   }
 
-  emPassword() {
+  get emPassword() {
     return this.form_email.get("emPassword")?.invalid && this.form_email.get("emPassword")?.touched;
   }
 
-  emEmailCC() {
+  get emEmailCC() {
     return this.form_email.get("emEmailCC")?.invalid && this.form_email.get("emEmailCC")?.touched;
   }
 
@@ -173,6 +173,7 @@ export class EmailComponent {
   }
 
   SaveAs() : void {
+    
     if(this.form_email.invalid){
       return Object.values(this.form_email.controls).forEach(control => {
         control.markAllAsTouched();
@@ -181,7 +182,9 @@ export class EmailComponent {
 
     this.mdlProgressShow = true;
 
-    if(this.form_email.get("accountID")?.value == 0){
+    
+
+    if(this.form_email.get("emailID")?.value == null || this.form_email.get("emailID")?.value == 0) {
 
       this.emailService.Add(this.form_email.value).subscribe({
         next: (response) => {
@@ -223,7 +226,6 @@ export class EmailComponent {
   Edit(d: any){
     this.form_email.reset();
     this.mdlTitle = "Editar Correo"
-    console.log(d);
     
     this.form_email.patchValue({
       emailID: d.item.emailID,

@@ -8,6 +8,8 @@ import { UserIdleService } from 'angular-user-idle';
 })
 export class MainComponent implements OnInit {
 
+  fullname = localStorage.getItem("fullName");
+
   // Begin variables the Timeout
   public mdlConfirmTimeout: boolean = false;
   public minutes_timeout = 0

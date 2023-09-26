@@ -125,13 +125,19 @@
               </div>
               <div class="form-group mt-2">
                 <label class="required font-weight-bold">Cuerpo del correo</label>
-                <angular-editor formControlName="emBody" [config]="editorConfig" class="form-control form-control-sm" [class.is-invalid]="emBody"></angular-editor>
+                
+
+                <div class="editor">
+                  <ngx-editor-menu [editor]="editor">
+                  </ngx-editor-menu>
+                  <ngx-editor [editor]="editor" formControlName="emBody" [class.is-invalid]="emBody" placeholder="Escribe aquí"></ngx-editor>
+                </div>
                 <small class="text-danger text-small" *ngIf="emBody">Este campo requiere 6 caracteres como mínimo</small>
               </div>
               <div class="row  mt-2">
                 <div class="col-md-12 text-center">
                   <button type="submit" class="btn btn-sm btn-primary">
-                    <i class="fa fa-save"></i>&nbsp;Guardar Cambios
+                    <i class="fa fa-save"></i>&nbsp;Guardar Cambiosng
                   </button>
                 </div>
               </div>

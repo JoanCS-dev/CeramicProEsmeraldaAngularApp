@@ -1,16 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DataTableDirective } from 'angular-datatables';
 import { UserIdleService } from 'angular-user-idle';
 import { Subject } from 'rxjs';
 import { EmailService } from 'src/app/services/email.service';
 import { Constants } from 'src/app/tools/Constants';
+import { Editor, Toolbar } from 'ngx-editor';
+
 
 @Component({
   selector: 'app-email',
-  templateUrl: './email.component.html'
+  templateUrl: './email.component.html',
+  styleUrls: ['./email.component.scss']
 })
 export class EmailComponent {
   @ViewChild(DataTableDirective, {static: false})
@@ -40,48 +42,7 @@ export class EmailComponent {
   public minutes_timeout = 0;
   // End variable the Timeout
   
-
-  public editorConfig: AngularEditorConfig = {
-    editable: true,
-      spellcheck: true,
-      height: 'auto',
-      minHeight: '0',
-      maxHeight: 'auto',
-      width: 'auto',
-      minWidth: '0',
-      translate: 'yes',
-      enableToolbar: true,
-      showToolbar: true,
-      placeholder: 'Enter text here...',
-      defaultParagraphSeparator: '',
-      defaultFontName: '',
-      defaultFontSize: '',
-      fonts: [
-        {class: 'arial', name: 'Arial'},
-        {class: 'times-new-roman', name: 'Times New Roman'},
-        {class: 'calibri', name: 'Calibri'},
-        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-      ],
-      customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ],
-};
+  public editor: any = Editor;
 
   public form_email= this.fb.group({
     emailID: [0, { nonNullable: true }],
@@ -118,6 +79,7 @@ export class EmailComponent {
   constructor(private emailService: EmailService, private userIdle: UserIdleService, private router: Router, private fb: FormBuilder) {}
 
   ngOnInit(){
+    this.editor = new Editor();
     this.userIdle.startWatching();
     this.userIdle.onTimerStart().subscribe(count => console.log(count));
     this.userIdle.onTimeout().subscribe(() => {
@@ -139,6 +101,7 @@ export class EmailComponent {
 
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
+    this.editor.destroy();
   }
 
   load() {

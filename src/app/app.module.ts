@@ -14,7 +14,7 @@ import { DataTablesModule } from "angular-datatables";
 import { QuotesComponent } from './components/home/quotes/quotes.component';
 import { provideUserIdleConfig } from "angular-user-idle";
 import { EmailComponent } from './components/home/email/email.component';
-import { AngularEditorModule } from "@kolkov/angular-editor";
+import { NgxEditorModule } from "ngx-editor";
 
 @NgModule({
   declarations: [
@@ -34,7 +34,44 @@ import { AngularEditorModule } from "@kolkov/angular-editor";
     SweetAlert2Module.forRoot(),
     HttpClientModule,
     DataTablesModule,
-    AngularEditorModule 
+    NgxEditorModule.forRoot({
+      locals: {
+        // menu
+        bold: 'Negritas',
+        italic: 'Itálica',
+        code: 'Código',
+        underline: 'Subrayar',
+        strike: 'Pegar',
+        blockquote: 'Cita en bloque',
+        bullet_list: 'Lista de viñetas',
+        ordered_list: 'Lista ordenada',
+        heading: 'Título',
+        h1: 'Título 1',
+        h2: 'Título 2',
+        h3: 'Título 3',
+        h4: 'Título 4',
+        h5: 'Título 5',
+        h6: 'Título 6',
+        align_left: 'Alinear a la izquierda',
+        align_center: 'Alinear al centro',
+        align_right: 'Alinear a la derecha',
+        align_justify: 'Justificar',
+        text_color: 'Color de texto',
+        background_color: 'Color de fondo',
+        insertLink: 'Insertar el link',
+        removeLink: 'Remover link',
+        insertImage: 'Insertar Imagen',
+    
+        // pupups, forms, others...
+        url: 'URL',
+        text: 'Texto',
+        openInNewTab: 'Abrir en una pestaña nueva',
+        insert: 'Insertar',
+        altText: 'Texto alternativo',
+        title: 'Titulo',
+        remove: 'Remover',
+      }
+    })
   ],
   providers: [
     // provideUserIdleConfig({ idle: 600, timeout: 300, ping: 120 })

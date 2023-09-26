@@ -113,7 +113,9 @@ export class EmailComponent {
         if(response.ok){
           this.lst_emails = response.data;
           this.dtTrigger.next(null);
-          this.mdlProgressShow = false;
+          setTimeout(() => {
+            this.mdlProgressShow = false;
+          }, 500)
         }else{
           this.ShowError(response.message);
         }

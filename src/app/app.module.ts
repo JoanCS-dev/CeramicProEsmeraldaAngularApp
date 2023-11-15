@@ -14,6 +14,8 @@ import { DataTablesModule } from "angular-datatables";
 import { QuotesComponent } from './components/home/quotes/quotes.component';
 import { provideUserIdleConfig } from "angular-user-idle";
 import { EmailComponent } from './components/home/email/email.component';
+import { SupportComponent } from "./components/support/support.component";
+import { PrivacyPolicyComponent } from "./components/privacy-policy/privacy-policy.component";
 import { NgxEditorModule } from "ngx-editor";
 
 @NgModule({
@@ -25,7 +27,9 @@ import { NgxEditorModule } from "ngx-editor";
     MainComponent,
     UserAdmonComponent,
     QuotesComponent,
-    EmailComponent
+    EmailComponent,
+    SupportComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,

@@ -58,7 +58,7 @@ export class SupportComponent {
       next: (response) => {
         if(response.ok){
           this.mdlSuccessShow = true;
-          this.mdlMessage = response.message;
+          this.mdlSuccessMessage = response.message;
           this.textBtn = "Enviar"
           this.isLoading = false
         }else{

@@ -1,1 +1,77 @@
-<p>support works!</p>
+<swal
+  *ngIf="mdlShow"
+  title="{{mdlTitle}}"
+  text="{{mdlMessage}}"
+  icon="error"
+  [swalFireOnInit]="true"
+  (didClose)="mdlShow = false">
+</swal>
+<swal 
+    *ngIf="mdlSuccessShow" 
+    icon="success" title="Correcto" 
+    text="{{ mdlSuccessMessage }}" 
+    [showConfirmButton]="true"
+    [allowEnterKey]="false" 
+    [allowEnterKey]="false" 
+    [allowOutsideClick]="false" 
+    [swalFireOnInit]="true"
+    (confirm)="reset()" 
+    (didClose)="mdlSuccessShow = false">
+</swal>
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container-xl px-4">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11">
+                      
+                        <div class="card my-5">
+                            <div class="card-body text-center">
+                              <div class="h1 fw-light mb-3 fw-bold text-upper text-uppercase">
+                                ATENCIÓN AL CLIENTE
+                              </div>
+                              <div class="h6 fw-light mb-3 fw-bold text-upper text-uppercase">
+                                Cuéntanos como podemos ayudarte y en breve te contáctamos
+                              </div>
+                            </div>
+                            <hr class="my-0" />
+                            <div class="card-body p-5">
+                              
+                                <form [formGroup]="form_support" (ngSubmit)="evtSupport()">
+                                  
+                                    <div class="mb-3">
+                                        <label class="text-gray-600 small">Nombre completo <span class="text-danger">*</span></label>
+                                        <input class="form-control form-control-solid" type="text" placeholder="Escribe aquí" formControlName="fullname"
+                                        [class.is-invalid]="FullnameIsValid"/>
+                                        <small *ngIf="FullnameIsValid" class="text-danger text-small">Por favor escribe el nombre completo</small>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="text-gray-600 small">Correo Electrónico <span class="text-danger">*</span></label>
+                                        <input class="form-control form-control-solid" type="text" placeholder="Escribe aquí" formControlName="email"
+                                        [class.is-invalid]="EmailIsValid"/>
+                                        <small *ngIf="EmailIsValid" class="text-danger text-small">Por favor escribe un correo electrónico valido</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="text-gray-600 small">Cuéntanos como podemos ayudarte <span class="text-danger">*</span></label>
+                                        <textarea class="form-control form-control-solid" type="text" placeholder="Escribe aquí" formControlName="problem"
+                                        [class.is-invalid]="ProblemIsValid" rows="4"></textarea>
+                                        <small *ngIf="ProblemIsValid" class="text-danger text-small">Por favor escribe una descripción</small>
+                                    </div>
+                                    <br>
+                                    <div class="d-flex align-items-center justify-content-center mb-0">
+                                        <button [disabled]="isLoading" type="submit" class="btn btn-dark">{{textBtn}}&nbsp;
+                                            <div *ngIf="isLoading" class="spinner-grow spinner-grow-sm" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                              </div>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+  </div>

@@ -7,6 +7,8 @@ import { MainComponent } from './components/home/main/main.component';
 import { UserAdmonComponent } from './components/home/user-admon/user-admon.component';
 import { QuotesComponent } from './components/home/quotes/quotes.component';
 import { EmailComponent } from './components/home/email/email.component';
+import { SupportComponent } from './components/support/support.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 const routes_home: Routes = [
   { path: "", component: MainComponent },
@@ -20,6 +22,8 @@ const routes_home: Routes = [
 const routes: Routes = [
   { path: "", component: LoginComponent },
   { path: "home", component: HomeComponent, children: routes_home },
+  { path: "support", component: SupportComponent },
+  { path: "privacy-policy", component: PrivacyPolicyComponent },
   { path: "**", component: PageNotFoundComponent }
 ];
 
